@@ -3,6 +3,19 @@ import { Tabs, Link } from "expo-router";
 import { Image } from "expo-image";
 import colors from "@/constants/colors";
 
+const ScanButton = () => (
+  <Link
+    href="/"
+    className="flex items-center justify-center w-[64px] h-[64px] bg-primary border-[4px] border-emerald-400 rounded-full mt-[-32px] p-[16px]"
+  >
+    <Image
+      style={{ width: "100%", height: "100%" }}
+      tintColor={"white"}
+      source={require("@/assets/icons/scan.svg")}
+    />
+  </Link>
+);
+
 const TabBarIcon: React.FC<{
   name: "home" | "diagnose" | "myGarden" | "profile";
   color: string;
@@ -72,19 +85,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="scan"
         options={{
-          title: "Scan",
-          tabBarButton: (props) => (
-            <Link
-              href="/"
-              className="flex items-center justify-center w-[64px] h-[64px] bg-primary rounded-full mt-[-32px] p-[16px]"
-            >
-              <Image
-                style={{ width: "100%", height: "100%" }}
-                tintColor={"white"}
-                source={require("@/assets/icons/scan.svg")}
-              />
-            </Link>
-          ),
+          tabBarButton: ScanButton,
         }}
       />
       <Tabs.Screen
