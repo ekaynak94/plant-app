@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs } from "expo-router";
 import { Image } from "expo-image";
+import colors from "@/constants/colors";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 const TabBarIcon: React.FC<{
@@ -47,8 +48,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#28AF6E",
-        tabBarInactiveTintColor: "#BDBDBD",
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.neutral,
       }}
     >
       <Tabs.Screen
