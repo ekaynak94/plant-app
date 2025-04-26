@@ -1,9 +1,8 @@
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, Link } from "expo-router";
 import { Image } from "expo-image";
 import colors from "@/constants/colors";
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 const TabBarIcon: React.FC<{
   name: "home" | "diagnose" | "myGarden" | "profile";
   color: string;
@@ -48,6 +47,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.neutral,
       }}
@@ -66,6 +66,24 @@ export default function TabLayout() {
           title: "Diagnose",
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="diagnose" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="scan"
+        options={{
+          title: "Scan",
+          tabBarButton: (props) => (
+            <Link
+              href="/"
+              className="flex items-center justify-center w-[64px] h-[64px] bg-primary rounded-full mt-[-32px] p-[16px]"
+            >
+              <Image
+                style={{ width: "100%", height: "100%" }}
+                tintColor={"white"}
+                source={require("@/assets/icons/scan.svg")}
+              />
+            </Link>
           ),
         }}
       />
