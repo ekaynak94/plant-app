@@ -1,37 +1,91 @@
 import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
-import { Pressable } from "react-native";
+import { Tabs } from "expo-router";
+import { Image } from "expo-image";
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>["name"];
+const TabBarIcon: React.FC<{
+  name: "home" | "diagnose" | "myGarden" | "profile";
   color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
+}> = ({ name, color }): React.ReactNode => {
+  switch (name) {
+    case "diagnose":
+      return (
+        <Image
+          style={{ width: 25, height: 25 }}
+          tintColor={color}
+          source={require("@/assets/icons/diagnose.svg")}
+        />
+      );
+    case "myGarden":
+      return (
+        <Image
+          style={{ width: 25, height: 25 }}
+          tintColor={color}
+          source={require("@/assets/icons/myGarden.svg")}
+        />
+      );
+    case "profile":
+      return (
+        <Image
+          style={{ width: 25, height: 25 }}
+          tintColor={color}
+          source={require("@/assets/icons/profile.svg")}
+        />
+      );
+    default:
+      return (
+        <Image
+          style={{ width: 25, height: 25 }}
+          tintColor={color}
+          source={require("@/assets/icons/home.svg")}
+        />
+      );
+  }
+};
 
 export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "grey",
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6
+        tabBarActiveTintColor: "#28AF6E",
+        tabBarInactiveTintColor: "#BDBDBD",
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Tab One",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: "Home",
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="diagnose"
         options={{
-          title: "Tab Two",
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          href: "/",
+          title: "Diagnose",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="diagnose" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="my-garden"
+        options={{
+          href: "/",
+          title: "My Garden",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="myGarden" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          href: "/",
+          title: "Profile",
+          tabBarIcon: ({ color }) => (
+            <TabBarIcon name="profile" color={color} />
+          ),
         }}
       />
     </Tabs>
