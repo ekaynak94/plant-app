@@ -1,6 +1,6 @@
 const API_BASE_URL = "https://dummy-api-jtg6bessta-ey.a.run.app/";
 
-export type Question = {
+export type Category = {
   id: number;
   name: string;
   createdAt: string;
@@ -29,8 +29,17 @@ export type Question = {
   };
 };
 
-export type QuestionsResponse = {
-  data: Question[];
+export type Question = {
+  id: number;
+  title: string;
+  subtitle: string;
+  image_uri: string;
+  uri: string;
+  order: number;
+};
+
+export type CategoriesResponse = {
+  data: Category[];
   meta: {
     pagination: {
       page: number;
@@ -41,18 +50,9 @@ export type QuestionsResponse = {
   };
 };
 
-export type Category = {
-  id: number;
-  title: string;
-  subtitle: string;
-  image_uri: string;
-  uri: string;
-  order: number;
-};
+export type QuestionsResponse = Question[];
 
-export type CategoriesResponse = Category[];
-
-export const getCategories = async (): Promise<any> => {
+export const getCategories = async (): Promise<CategoriesResponse> => {
   try {
     const response = await fetch(`${API_BASE_URL}getCategories`, {
       method: "GET",
@@ -65,7 +65,7 @@ export const getCategories = async (): Promise<any> => {
   }
 };
 
-export const getQuestions = async (): Promise<any> => {
+export const getQuestions = async (): Promise<QuestionsResponse> => {
   try {
     const response = await fetch(`${API_BASE_URL}getQuestions`, {
       method: "GET",
