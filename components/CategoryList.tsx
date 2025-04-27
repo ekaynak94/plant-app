@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Text, Pressable, ActivityIndicator } from "react-native";
+import {
+  FlatList,
+  Text,
+  Pressable,
+  ActivityIndicator,
+  ImageBackground,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { getCategories, Category } from "@/api/service";
 
 type CategoryListProps = {
   className?: string;
 };
 
-const CategoryCard: React.FC<{ category: Category }> = ({ category }) => {
+const CategoryCard: React.FC<{ category: Category; size: number }> = ({
+  category,
+  size,
+}) => {
   const onPress = () => {
     console.log("Category pressed:", category);
   };
@@ -14,14 +25,28 @@ const CategoryCard: React.FC<{ category: Category }> = ({ category }) => {
   return (
     <Pressable
       onPress={onPress}
-      className="h-[164px] w-[240px] rounded-lg overflow-hidden mr-4"
+      className="aspect-square rounded-lg border-[#29BB892E] border-[0.5px] overflow-hidden"
+      style={{ width: size, height: size }}
     >
-      <Text className="text-red font-bold">{category.name}</Text>
+      <ImageBackground
+        source={{ uri: category.image.url }}
+        className="flex-1 justify-start"
+        imageStyle={{ borderRadius: 12 }}
+      >
+        <View className="p-2">
+          <Text className="text-[#13231B] font-bold">{category.title}</Text>
+        </View>
+      </ImageBackground>
     </Pressable>
   );
 };
 
 const CategoryList: React.FC<CategoryListProps> = ({ className }) => {
+  const { width } = useWindowDimensions();
+  const gap = 16;
+  const numColumns = 2;
+  const cardSize = (width - gap * (numColumns + 1)) / numColumns;
+
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<{
     categories: Category[];
@@ -61,9 +86,14 @@ const CategoryList: React.FC<CategoryListProps> = ({ className }) => {
   return (
     <FlatList
       className={className}
+      contentContainerStyle={{ gap }}
+      columnWrapperStyle={{ gap }}
       data={results.categories}
       keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => <CategoryCard category={item} />}
+      renderItem={({ item }) => (
+        <CategoryCard category={item} size={cardSize} />
+      )}
+      numColumns={numColumns}
       onEndReached={fetchMore}
       onEndReachedThreshold={0.5}
       ListFooterComponent={
