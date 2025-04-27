@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Pressable, Text } from "react-native";
-import { Image } from "expo-image";
 import { Link } from "expo-router";
+import Icon from "@/components/Icon";
 
 type SubscriptionButtonProps = {
   className?: string;
@@ -16,10 +16,7 @@ const SubscriptionButton: React.FC<SubscriptionButtonProps> = ({
         className={`flex-row items-center bg-white p-3 rounded-lg shadow-sm ${className}`}
       >
         <View className="relative">
-          <Image
-            source={require("@/assets/icons/envelope.svg")}
-            style={{ width: 24, height: 24 }}
-          />
+          <Icon source={require("@/assets/icons/envelope.svg")} size={24} />
           <View className="absolute top-[-4px] right-[-4px] bg-red-500 rounded-full w-4 h-4 items-center justify-center">
             <Text className="text-white text-[10px] font-bold">3</Text>
           </View>
@@ -32,10 +29,7 @@ const SubscriptionButton: React.FC<SubscriptionButtonProps> = ({
             Tap to upgrade your account!
           </Text>
         </View>
-        <Image
-          source={require("@/assets/icons/right-arrow.svg")}
-          style={{ width: 16, height: 16 }}
-        />
+        <Icon source={require("@/assets/icons/right-arrow.svg")} size={16} />
       </Pressable>
     </Link>
   );

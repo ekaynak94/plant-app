@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs, Link } from "expo-router";
-import { Image } from "expo-image";
+import Icon from "@/components/Icon";
 import colors from "@/constants/colors";
 
 const ScanButton = () => (
@@ -8,53 +8,9 @@ const ScanButton = () => (
     href="/"
     className="flex items-center justify-center w-[64px] h-[64px] bg-primary border-[4px] border-emerald-400 rounded-full mt-[-32px] p-[16px]"
   >
-    <Image
-      style={{ width: "100%", height: "100%" }}
-      tintColor={"white"}
-      source={require("@/assets/icons/scan.svg")}
-    />
+    <Icon source={require("@/assets/icons/scan.svg")} size={32} color="white" />
   </Link>
 );
-
-const TabBarIcon: React.FC<{
-  name: "home" | "diagnose" | "myGarden" | "profile";
-  color: string;
-}> = ({ name, color }): React.ReactNode => {
-  switch (name) {
-    case "diagnose":
-      return (
-        <Image
-          style={{ width: 25, height: 25 }}
-          tintColor={color}
-          source={require("@/assets/icons/diagnose.svg")}
-        />
-      );
-    case "myGarden":
-      return (
-        <Image
-          style={{ width: 25, height: 25 }}
-          tintColor={color}
-          source={require("@/assets/icons/myGarden.svg")}
-        />
-      );
-    case "profile":
-      return (
-        <Image
-          style={{ width: 25, height: 25 }}
-          tintColor={color}
-          source={require("@/assets/icons/profile.svg")}
-        />
-      );
-    default:
-      return (
-        <Image
-          style={{ width: 25, height: 25 }}
-          tintColor={color}
-          source={require("@/assets/icons/home.svg")}
-        />
-      );
-  }
-};
 
 export default function TabLayout() {
   return (
@@ -69,7 +25,13 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <Icon
+              source={require("@/assets/icons/home.svg")}
+              size={25}
+              color={color}
+            />
+          ),
         }}
       />
       <Tabs.Screen
@@ -78,7 +40,11 @@ export default function TabLayout() {
           href: "/",
           title: "Diagnose",
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="diagnose" color={color} />
+            <Icon
+              source={require("@/assets/icons/diagnose.svg")}
+              size={25}
+              color={color}
+            />
           ),
         }}
       />
@@ -94,7 +60,11 @@ export default function TabLayout() {
           href: "/",
           title: "My Garden",
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="myGarden" color={color} />
+            <Icon
+              source={require("@/assets/icons/myGarden.svg")}
+              size={25}
+              color={color}
+            />
           ),
         }}
       />
@@ -104,7 +74,11 @@ export default function TabLayout() {
           href: "/",
           title: "Profile",
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="profile" color={color} />
+            <Icon
+              source={require("@/assets/icons/profile.svg")}
+              size={25}
+              color={color}
+            />
           ),
         }}
       />

@@ -1,12 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { Image } from "expo-image";
+import Icon from "@/components/Icon";
 
-type HeaderProps = {
-  className?: string;
-};
-
-const Header: React.FC<HeaderProps> = ({ className }) => {
+const Header: React.FC<{ className?: string }> = ({ className }) => {
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return { greeting: "Good Morning", emoji: "☀️" };
@@ -33,15 +30,15 @@ const Header: React.FC<HeaderProps> = ({ className }) => {
         {greeting}! {emoji}
       </Text>
       <View className="mt-4 flex-row items-center bg-white rounded-lg p-3 border-[0.2px] border-gray-300">
-        <Image
-          style={{ width: 20, height: 20, marginRight: 8 }}
+        <Icon
           source={require("@/assets/icons/search.svg")}
-          tintColor="#ABABAB"
+          size={20}
+          color="#ABABAB"
         />
         <TextInput
           placeholder="Search for plants"
           placeholderTextColor="#ABABAB"
-          className="text-text"
+          className="text-text ml-2"
         />
       </View>
     </View>
