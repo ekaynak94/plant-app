@@ -52,9 +52,9 @@ export type CategoriesResponse = {
 
 export type QuestionsResponse = Question[];
 
-export const getCategories = async (): Promise<CategoriesResponse> => {
+export const getCategories = async (page = 0): Promise<CategoriesResponse> => {
   try {
-    const response = await fetch(`${API_BASE_URL}getCategories`, {
+    const response = await fetch(`${API_BASE_URL}getCategories?page=${page}`, {
       method: "GET",
     });
     const data = await response.json();
