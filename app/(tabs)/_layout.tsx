@@ -1,12 +1,11 @@
 import React from "react";
 import { Tabs, Link } from "expo-router";
 import Icon from "@/components/Icon";
-import colors from "@/constants/colors";
 
 const ScanButton = () => (
   <Link
     href="/"
-    className="flex items-center justify-center w-[64px] h-[64px] bg-primary border-[4px] border-emerald-400 rounded-full mt-[-32px] p-[16px]"
+    className="flex items-center justify-center w-[64px] h-[64px] bg-[#28AF6E] border-[4px] border-[#2CCC80] rounded-full mt-[-32px] p-[16px]"
   >
     <Icon source={require("@/assets/icons/scan.svg")} size={32} color="white" />
   </Link>
@@ -17,8 +16,8 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: colors.neutral,
+        tabBarActiveTintColor: "#28AF6E",
+        tabBarInactiveTintColor: "#BDBDBD",
       }}
     >
       <Tabs.Screen

@@ -15,7 +15,7 @@ const Header: React.FC<{ className?: string }> = ({ className }) => {
 
   return (
     <View
-      className={`relative overflow-hidden bg-white border-b-[0.2px] border-gray-300 pb-4 ${className}`}
+      className={`relative overflow-hidden bg-white border-b-[0.2px] border-[#3C3C4340] pb-4 ${className}`}
     >
       <Image
         source={require("@/assets/images/header-left.png")}
@@ -25,11 +25,11 @@ const Header: React.FC<{ className?: string }> = ({ className }) => {
         source={require("@/assets/images/header-right.png")}
         style={styles.headerRightImage}
       />
-      <Text className="text-text">Hi, plant lover!</Text>
-      <Text className="text-2xl text-text font-bold mt-2">
+      <Text className="text-[#13231B]">Hi, plant lover!</Text>
+      <Text className="text-2xl text-[#13231B] font-bold mt-2">
         {greeting}! {emoji}
       </Text>
-      <View className="mt-4 flex-row items-center bg-white rounded-lg p-3 border-[0.2px] border-gray-300">
+      <View className="mt-4 flex-row items-center bg-white rounded-lg p-3 border-[0.2px] border-[#3C3C4340]">
         <Icon
           source={require("@/assets/icons/search.svg")}
           size={20}
@@ -38,7 +38,7 @@ const Header: React.FC<{ className?: string }> = ({ className }) => {
         <TextInput
           placeholder="Search for plants"
           placeholderTextColor="#ABABAB"
-          className="text-text ml-2"
+          className="text-[#13231B] ml-2"
         />
       </View>
     </View>
