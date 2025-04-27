@@ -48,8 +48,8 @@ function RootLayoutNav() {
     <Stack>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
-        name="subscription-modal"
-        options={{ presentation: "modal" }}
+        name="subscription"
+        options={{ headerShown: false, presentation: "modal" }}
       />
     </Stack>
   );
