@@ -2,7 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { Image } from "expo-image";
 
-const Header: React.FC = () => {
+type HeaderProps = {
+  className?: string;
+};
+
+const Header: React.FC<HeaderProps> = ({ className }) => {
   const getGreeting = () => {
     const hour = new Date().getHours();
     if (hour < 12) return { greeting: "Good Morning", emoji: "☀️" };
@@ -13,7 +17,9 @@ const Header: React.FC = () => {
   const { greeting, emoji } = getGreeting();
 
   return (
-    <View className="relative overflow-hidden bg-white border-b-[0.2px] border-gray-300 px-4 pb-4">
+    <View
+      className={`relative overflow-hidden bg-white border-b-[0.2px] border-gray-300 pb-4 ${className}`}
+    >
       <Image
         source={require("@/assets/images/header-left.png")}
         style={styles.headerLeftImage}
