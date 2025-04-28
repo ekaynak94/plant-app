@@ -11,6 +11,7 @@ import {
 import { getCategories, Category } from "@/api/service";
 
 type CategoryListProps = {
+  listHeader?: React.ReactElement;
   className?: string;
 };
 
@@ -41,7 +42,10 @@ const CategoryCard: React.FC<{ category: Category; size: number }> = ({
   );
 };
 
-const CategoryList: React.FC<CategoryListProps> = ({ className }) => {
+const CategoryList: React.FC<CategoryListProps> = ({
+  listHeader,
+  className,
+}) => {
   const { width } = useWindowDimensions();
   const gap = 16;
   const numColumns = 2;
@@ -66,7 +70,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ className }) => {
       const newCategories = [...results.categories, ...data];
       const { page, pageCount } = meta.pagination;
       const hasMore = page < pageCount;
-      console.log(newCategories.length, page, hasMore);
+
       setResults({
         categories: newCategories,
         hasMore,
@@ -88,6 +92,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ className }) => {
       className={className}
       contentContainerStyle={{ gap }}
       columnWrapperStyle={{ gap }}
+      ListHeaderComponent={listHeader}
       data={results.categories}
       keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (

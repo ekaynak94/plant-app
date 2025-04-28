@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, Text, StatusBar } from "react-native";
+import { View, Text, StatusBar } from "react-native";
 import Header from "@/components/Header";
 import SubscriptionButton from "@/components/SubscriptionButton";
 import QuestionList from "@/components/QuestionList";
@@ -7,13 +7,21 @@ import CategoryList from "../../components/CategoryList";
 
 export default function HomeScreen() {
   return (
-    <ScrollView className="pt-safe bg-white">
+    <View className="flex-1 pt-safe pb-8 bg-white">
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <Header className="px-4" />
-      <SubscriptionButton className="m-4" />
-      <Text className="m-4 text-lg font-bold text-[#13231B]">Get Started</Text>
-      <QuestionList className="px-4" />
-      <CategoryList className="m-4" />
-    </ScrollView>
+      <CategoryList
+        className="pl-4"
+        listHeader={
+          <View>
+            <SubscriptionButton className="my-4 mr-4" />
+            <Text className="my-4 mr-4 text-lg font-bold text-[#13231B]">
+              Get Started
+            </Text>
+            <QuestionList />
+          </View>
+        }
+      />
+    </View>
   );
 }
