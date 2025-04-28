@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Pressable, ScrollView } from "react-native";
 import Icon from "@/components/Icon";
 import { Image } from "expo-image";
@@ -58,21 +58,31 @@ const FeatureItem: React.FC<{ feature: Feature }> = ({ feature }) => (
   </View>
 );
 
-const PlanItem: React.FC<{ plan: Plan }> = ({ plan }) => (
-  <View className="flex-row items-center p-4 rounded-2xl border-[0.5px] border-[#FFFFFF4D] overflow-hidden relative">
+const PlanItem: React.FC<{
+  plan: Plan;
+  isSelected: boolean;
+  onSelect: () => void;
+}> = ({ plan, isSelected, onSelect }) => (
+  <Pressable
+    onPress={onSelect}
+    className="flex-row items-center p-4 rounded-2xl overflow-hidden relative"
+  >
     <BlurView intensity={20} tint="light" className="absolute inset-0" />
-    <Pressable className="flex-row items-center">
-      <View className="w-5 h-5 rounded-full border-2 border-white mr-4" />
-      <View>
-        <Text className="text-white font-bold">{plan.title}</Text>
-        <Text className="text-[#FFFFFFB2] text-xs">{plan.subtitle}</Text>
-      </View>
-    </Pressable>
-  </View>
+    <View
+      className={`w-6 h-6 rounded-full mr-4 items-center justify-center ${
+        isSelected ? "bg-white border-8 border-[#28AF6E]" : "bg-[#FFFFFF4D]"
+      }`}
+    ></View>
+    <View>
+      <Text className="text-white font-bold">{plan.title}</Text>
+      <Text className="text-[#FFFFFFB2] text-xs">{plan.subtitle}</Text>
+    </View>
+  </Pressable>
 );
 
 export default function SubscriptionModal() {
   const router = useRouter();
+  const [selectedPlan, setSelectedPlan] = useState<number>(plans.length - 1);
 
   const closeModal = () => {
     router.back();
@@ -112,7 +122,12 @@ export default function SubscriptionModal() {
         </ScrollView>
         <View className="mx-4 mb-4 gap-4">
           {plans.map((plan, index) => (
-            <PlanItem key={index} plan={plan} />
+            <PlanItem
+              key={index}
+              plan={plan}
+              isSelected={selectedPlan === index}
+              onSelect={() => setSelectedPlan(index)}
+            />
           ))}
         </View>
         <Pressable className="mx-4 bg-[#28AF6E] rounded-2xl py-4 items-center">
