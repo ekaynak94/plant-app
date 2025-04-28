@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Platform } from "react-native";
+import { View, Text } from "react-native";
 import { Image } from "expo-image";
 
 type UnderlinedTextProps = {
@@ -8,11 +8,7 @@ type UnderlinedTextProps = {
 
 const UnderlinedText: React.FC<UnderlinedTextProps> = ({ text }) => {
   return (
-    <View
-      className={`relative translate-y-[${
-        Platform.OS === "ios" ? "50%" : "25%"
-      }]`}
-    >
+    <View className={`relative translate-y-[50%]`}>
       <Text className="text-[#13231B] font-bold text-2xl">{text}</Text>
       <Image
         source={require("@/assets/images/underline.png")}

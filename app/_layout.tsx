@@ -52,7 +52,7 @@ function RootLayoutNav() {
   }, [loaded]);
 
   useEffect(() => {
-    if (loaded) {
+    if (loaded && !onboardingCompleted) {
       router.navigate("/onboarding");
     }
   }, [loaded, onboardingCompleted]);
