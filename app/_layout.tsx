@@ -49,7 +49,7 @@ function RootLayoutNav() {
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen
         name="subscription"
-        options={{ headerShown: false, presentation: "modal" }}
+        options={{ headerShown: false, presentation: "fullScreenModal" }}
       />
     </Stack>
   );
