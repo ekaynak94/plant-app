@@ -7,11 +7,11 @@ import CategoryList from "../../components/CategoryList";
 
 export default function HomeScreen() {
   return (
-    <View className="flex-1 pt-safe pb-8 bg-white">
+    <View className="flex-1 pt-safe bg-white">
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       <Header className="px-4" />
       <CategoryList
-        className="pl-4"
+        className="pl-4 pb-8"
         listHeader={
           <View>
             <SubscriptionButton className="my-4 mr-4" />
