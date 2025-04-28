@@ -3,19 +3,41 @@ import { View, Text, Pressable, Image, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import PagerView from "react-native-pager-view";
 import { LinearGradient } from "expo-linear-gradient";
+import UnderlinedText from "@/components/UnderlinedText";
 
 const steps = [
   {
-    title: require("@/assets/images/onboarding-1-title.png"),
-    content: require("@/assets/images/onboarding-1-content.png"),
+    title: (
+      <View>
+        <Text className="text-2xl text-[#13231B]">
+          Welcome to <Text className="font-bold">PlantApp</Text>
+        </Text>
+        <Text className="text-sm text-[#13231BB2] mt-2">
+          Identify more than 3000+ plants and 88% accuracy.
+        </Text>
+      </View>
+    ),
+    image: require("@/assets/images/onboarding-1.png"),
   },
   {
-    title: require("@/assets/images/onboarding-2-title.png"),
-    content: require("@/assets/images/onboarding-2-content.png"),
+    title: (
+      <View>
+        <Text className="text-2xl text-[#13231B]">
+          Take a photo to <UnderlinedText text="identify" /> the plant!
+        </Text>
+      </View>
+    ),
+    image: require("@/assets/images/onboarding-2.png"),
   },
   {
-    title: require("@/assets/images/onboarding-3-title.png"),
-    content: require("@/assets/images/onboarding-3-content.png"),
+    title: (
+      <View>
+        <Text className="text-2xl text-[#13231B]">
+          Get plant <UnderlinedText text="care guides" />
+        </Text>
+      </View>
+    ),
+    image: require("@/assets/images/onboarding-3.png"),
   },
 ];
 
@@ -41,14 +63,10 @@ export default function Onboarding() {
         onPageSelected={(e) => setCurrentStep(e.nativeEvent.position)}
       >
         {steps.map((step, index) => (
-          <View key={index} className="flex-1 items-start justify-start">
+          <View key={index} className="flex-1 gap-8 items-start justify-start">
+            <View className="w-full m-4">{step.title}</View>
             <Image
-              source={step.title}
-              className="w-auto h-[20%] my-4 px-4"
-              resizeMode="contain"
-            />
-            <Image
-              source={step.content}
+              source={step.image}
               className="w-[100%] h-auto"
               resizeMode="contain"
             />
