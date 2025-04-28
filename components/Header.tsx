@@ -1,21 +1,47 @@
 import React from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, Animated } from "react-native";
 import { Image } from "expo-image";
 import Icon from "@/components/Icon";
 
-const Header: React.FC<{ className?: string }> = ({ className }) => {
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return { greeting: "Good Morning", emoji: "☀️" };
-    if (hour < 18) return { greeting: "Good Afternoon", emoji: "🌤️" };
-    return { greeting: "Good Evening", emoji: "🌙" };
-  };
+type HeaderProps = {
+  className?: string;
+  scrollY: Animated.Value;
+};
 
-  const { greeting, emoji } = getGreeting();
+const Header: React.FC<HeaderProps> = ({ className, scrollY }) => {
+  const headerHeight = scrollY.interpolate({
+    inputRange: [0, 50],
+    outputRange: [120, 80], // Adjusted to keep the search bar visible
+    extrapolate: "clamp",
+  });
+
+  const textOpacity = scrollY.interpolate({
+    inputRange: [0, 50],
+    outputRange: [1, 0], // Fade out text as the header collapses
+    extrapolate: "clamp",
+  });
+
+  const textScale = scrollY.interpolate({
+    inputRange: [0, 50],
+    outputRange: [1, 0.8], // Shrink text as the header collapses
+    extrapolate: "clamp",
+  });
+
+  const searchBarTranslateY = scrollY.interpolate({
+    inputRange: [0, 50],
+    outputRange: [0, -40], // Move the search bar up as the header collapses
+    extrapolate: "clamp",
+  });
 
   return (
-    <View
-      className={`relative overflow-hidden bg-white border-b-[0.2px] border-[#3C3C4340] pb-4 ${className}`}
+    <Animated.View
+      style={{
+        height: headerHeight,
+        backgroundColor: "white",
+        zIndex: 10,
+        elevation: 10,
+      }}
+      className={`relative overflow-hidden border-b-[0.2px] border-[#3C3C4340] pb-4 ${className}`}
     >
       <Image
         source={require("@/assets/images/header-left.png")}
@@ -25,11 +51,20 @@ const Header: React.FC<{ className?: string }> = ({ className }) => {
         source={require("@/assets/images/header-right.png")}
         style={styles.headerRightImage}
       />
-      <Text className="text-[#13231B]">Hi, plant lover!</Text>
-      <Text className="text-2xl text-[#13231B] font-bold mt-2">
-        {greeting}! {emoji}
-      </Text>
-      <View className="mt-4 flex-row items-center bg-white rounded-lg p-3 border-[0.2px] border-[#3C3C4340]">
+      <Animated.View
+        style={{ opacity: textOpacity, transform: [{ scale: textScale }] }}
+      >
+        <Text className="text-[#13231B]">Hi, plant lover!</Text>
+        <Text className="text-2xl text-[#13231B] font-bold mt-2">
+          {getGreeting().greeting}! {getGreeting().emoji}
+        </Text>
+      </Animated.View>
+      <Animated.View
+        style={{
+          transform: [{ translateY: searchBarTranslateY }],
+        }}
+        className="mt-4 flex-row items-center bg-white rounded-lg p-3 border-[0.2px] border-[#3C3C4340]"
+      >
         <Icon
           source={require("@/assets/icons/search.svg")}
           size={20}
@@ -40,9 +75,16 @@ const Header: React.FC<{ className?: string }> = ({ className }) => {
           placeholderTextColor="#ABABAB"
           className="text-[#13231B] ml-2"
         />
-      </View>
-    </View>
+      </Animated.View>
+    </Animated.View>
   );
+};
+
+const getGreeting = () => {
+  const hour = new Date().getHours();
+  if (hour < 12) return { greeting: "Good Morning", emoji: "☀️" };
+  if (hour < 18) return { greeting: "Good Afternoon", emoji: "🌤️" };
+  return { greeting: "Good Evening", emoji: "🌙" };
 };
 
 const styles = StyleSheet.create({

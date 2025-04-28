@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StatusBar } from "react-native";
+import React, { useRef } from "react";
+import { View, Text, StatusBar, Animated } from "react-native";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import Header from "@/components/Header";
@@ -12,10 +12,12 @@ export default function HomeScreen() {
     (state: RootState) => state.subscription.discountOfferCount
   );
 
+  const scrollY = useRef(new Animated.Value(0)).current;
+
   return (
     <View className="flex-1 pt-safe bg-white">
       <StatusBar barStyle="dark-content" backgroundColor="white" />
-      <Header className="px-4" />
+      <Header className="px-4" scrollY={scrollY} />
       <CategoryList
         className="pl-4 pb-8"
         listHeader={
@@ -32,6 +34,11 @@ export default function HomeScreen() {
             <QuestionList />
           </View>
         }
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+          { useNativeDriver: false }
+        )}
+        scrollEventThrottle={16}
       />
     </View>
   );

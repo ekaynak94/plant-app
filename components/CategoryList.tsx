@@ -13,6 +13,8 @@ import { getCategories, Category } from "@/api/service";
 type CategoryListProps = {
   listHeader?: React.ReactElement;
   className?: string;
+  onScroll?: (event: any) => void;
+  scrollEventThrottle?: number;
 };
 
 const CategoryCard: React.FC<{ category: Category; size: number }> = ({
@@ -45,6 +47,8 @@ const CategoryCard: React.FC<{ category: Category; size: number }> = ({
 const CategoryList: React.FC<CategoryListProps> = ({
   listHeader,
   className,
+  onScroll,
+  scrollEventThrottle = 16,
 }) => {
   const { width } = useWindowDimensions();
   const gap = 16;
@@ -101,6 +105,8 @@ const CategoryList: React.FC<CategoryListProps> = ({
       numColumns={numColumns}
       onEndReached={fetchMore}
       onEndReachedThreshold={0.5}
+      onScroll={onScroll}
+      scrollEventThrottle={scrollEventThrottle}
       ListFooterComponent={
         isLoading && results.hasMore ? <ActivityIndicator size="large" /> : null
       }
