@@ -5,6 +5,9 @@ import { Image } from "expo-image";
 import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
+import { selectPlan } from "@/store/subscriptionSlice";
 
 type Feature = {
   icon: any;
@@ -33,18 +36,6 @@ const features: Feature[] = [
     icon: require("@/assets/icons/my-garden.svg"),
     title: "Detailed",
     subtitle: "Plant Care",
-  },
-];
-
-const plans: Plan[] = [
-  {
-    title: "1 Month",
-    subtitle: "$2.99/month, auto renewable",
-  },
-  {
-    title: "1 Year",
-    subtitle: "First 3 days free, then $529.99/year",
-    discount: "Save 50%",
   },
 ];
 
@@ -109,9 +100,20 @@ const PlanItem: React.FC<{
 
 export default function SubscriptionModal() {
   const router = useRouter();
-  const [selectedPlan, setSelectedPlan] = useState<number>(plans.length - 1);
+  const dispatch = useDispatch();
+  const plans = useSelector((state: RootState) => state.subscription.plans);
+  const storeSelectedPlanIndex = useSelector(
+    (state: RootState) => state.subscription.selectedPlanIndex
+  );
 
-  const closeModal = () => {
+  const [localSelectedPlan, setLocalSelectedPlan] = useState<number | null>(
+    storeSelectedPlanIndex
+  );
+
+  const handleTryFree = () => {
+    if (localSelectedPlan !== null) {
+      dispatch(selectPlan(localSelectedPlan)); // Save the selected plan to the store
+    }
     router.back();
   };
 
@@ -122,7 +124,7 @@ export default function SubscriptionModal() {
         style={{ width: "100%", height: "60%" }}
       />
       <Pressable
-        onPress={closeModal}
+        onPress={() => router.back()}
         className="absolute top-safe right-4 bg-black/40 rounded-full items-center justify-center w-10 h-10"
       >
         <Icon
@@ -152,12 +154,15 @@ export default function SubscriptionModal() {
             <PlanItem
               key={index}
               plan={plan}
-              isSelected={selectedPlan === index}
-              onSelect={() => setSelectedPlan(index)}
+              isSelected={localSelectedPlan === index}
+              onSelect={() => setLocalSelectedPlan(index)}
             />
           ))}
         </View>
-        <Pressable className="mx-4 bg-[#28AF6E] rounded-2xl py-4 items-center">
+        <Pressable
+          onPress={handleTryFree}
+          className="mx-4 bg-[#28AF6E] rounded-2xl py-4 items-center"
+        >
           <Text className="text-white font-bold">Try Free for 3 Days</Text>
         </Pressable>
         <Text className="mx-4 text-[#FFFFFF85] text-xs text-center mt-4">
