@@ -15,8 +15,9 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ className, scrollY }) => {
-  const headerMaxHeight = PixelRatio.getFontScale() * 16 * 7 + 20;
-  const headerMinHeight = PixelRatio.getFontScale() * 16 * 5 + 20;
+  const fontSize = PixelRatio.getFontScale() * 16;
+  const headerMaxHeight = fontSize * 7;
+  const headerMinHeight = fontSize * 6.3;
 
   const headerHeight = scrollY.interpolate({
     inputRange: [0, 50],
@@ -38,7 +39,7 @@ const Header: React.FC<HeaderProps> = ({ className, scrollY }) => {
 
   const searchBarTranslateY = scrollY.interpolate({
     inputRange: [0, 50],
-    outputRange: [0, -(headerMaxHeight - headerMinHeight) / 2],
+    outputRange: [0, -(headerMaxHeight - headerMinHeight)],
     extrapolate: "clamp",
   });
 
@@ -50,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({ className, scrollY }) => {
         zIndex: 10,
         elevation: 10,
       }}
-      className={`relative overflow-hidden border-b-[0.2px] border-[#3C3C4340] pb-4 ${className}`}
+      className={`relative overflow-hidden border-b-[0.2px] border-[#3C3C4340] ${className}`}
     >
       <Image
         source={require("@/assets/images/header-left.png")}
@@ -64,7 +65,7 @@ const Header: React.FC<HeaderProps> = ({ className, scrollY }) => {
         style={{ opacity: textOpacity, transform: [{ scale: textScale }] }}
       >
         <Text className="text-[#13231B]">Hi, plant lover!</Text>
-        <Text className="text-2xl text-[#13231B] font-bold mt-2">
+        <Text className="text-2xl text-[#13231B]  font-bold">
           {getGreeting().greeting}! {getGreeting().emoji}
         </Text>
       </Animated.View>
@@ -72,7 +73,7 @@ const Header: React.FC<HeaderProps> = ({ className, scrollY }) => {
         style={{
           transform: [{ translateY: searchBarTranslateY }],
         }}
-        className="mt-4 flex-row items-center bg-white rounded-lg p-3 border-[0.2px] border-[#3C3C4340]"
+        className="h-12 px-4 flex-row items-center bg-white rounded-lg  border-[0.2px] border-[#3C3C4340]"
       >
         <Icon
           source={require("@/assets/icons/search.svg")}
@@ -82,7 +83,7 @@ const Header: React.FC<HeaderProps> = ({ className, scrollY }) => {
         <TextInput
           placeholder="Search for plants"
           placeholderTextColor="#ABABAB"
-          className="text-[#13231B]  ml-2"
+          className="text-[#13231B] ml-2"
         />
       </Animated.View>
     </Animated.View>
