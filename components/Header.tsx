@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, TextInput, Animated } from "react-native";
+import {
+  PixelRatio,
+  Text,
+  StyleSheet,
+  TextInput,
+  Animated,
+} from "react-native";
 import { Image } from "expo-image";
 import Icon from "@/components/Icon";
 
@@ -9,27 +15,30 @@ type HeaderProps = {
 };
 
 const Header: React.FC<HeaderProps> = ({ className, scrollY }) => {
+  const headerMaxHeight = PixelRatio.getFontScale() * 16 * 7 + 20;
+  const headerMinHeight = PixelRatio.getFontScale() * 16 * 5 + 20;
+
   const headerHeight = scrollY.interpolate({
     inputRange: [0, 50],
-    outputRange: [120, 80], // Adjusted to keep the search bar visible
+    outputRange: [headerMaxHeight, headerMinHeight],
     extrapolate: "clamp",
   });
 
   const textOpacity = scrollY.interpolate({
     inputRange: [0, 50],
-    outputRange: [1, 0], // Fade out text as the header collapses
+    outputRange: [1, 0],
     extrapolate: "clamp",
   });
 
   const textScale = scrollY.interpolate({
     inputRange: [0, 50],
-    outputRange: [1, 0.8], // Shrink text as the header collapses
+    outputRange: [1, 0.8],
     extrapolate: "clamp",
   });
 
   const searchBarTranslateY = scrollY.interpolate({
     inputRange: [0, 50],
-    outputRange: [0, -40], // Move the search bar up as the header collapses
+    outputRange: [0, -(headerMaxHeight - headerMinHeight) / 2],
     extrapolate: "clamp",
   });
 
@@ -73,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({ className, scrollY }) => {
         <TextInput
           placeholder="Search for plants"
           placeholderTextColor="#ABABAB"
-          className="text-[#13231B] ml-2"
+          className="text-[#13231B]  ml-2"
         />
       </Animated.View>
     </Animated.View>
@@ -104,6 +113,7 @@ const styles = StyleSheet.create({
       { rotate: "197.61 deg" },
     ],
   },
+
   headerRightImage: {
     zIndex: -1,
     elevation: -1,
