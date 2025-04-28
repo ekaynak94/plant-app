@@ -25,7 +25,7 @@ const initialState: SubscriptionState = {
     },
   ],
   selectedPlanIndex: null,
-  discountOfferCount: 0,
+  discountOfferCount: 1,
 };
 
 const subscriptionSlice = createSlice({

@@ -1,11 +1,17 @@
 import React from "react";
 import { View, Text, StatusBar } from "react-native";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 import Header from "@/components/Header";
 import SubscriptionButton from "@/components/SubscriptionButton";
 import QuestionList from "@/components/QuestionList";
 import CategoryList from "../../components/CategoryList";
 
 export default function HomeScreen() {
+  const discountOfferCount = useSelector(
+    (state: RootState) => state.subscription.discountOfferCount
+  );
+
   return (
     <View className="flex-1 pt-safe bg-white">
       <StatusBar barStyle="dark-content" backgroundColor="white" />
@@ -14,7 +20,12 @@ export default function HomeScreen() {
         className="pl-4 pb-8"
         listHeader={
           <View>
-            <SubscriptionButton className="my-4 mr-4" />
+            {discountOfferCount !== 0 && (
+              <SubscriptionButton
+                className="my-4 mr-4"
+                badgeCount={discountOfferCount}
+              />
+            )}
             <Text className="my-4 mr-4 text-lg font-bold text-[#13231B]">
               Get Started
             </Text>

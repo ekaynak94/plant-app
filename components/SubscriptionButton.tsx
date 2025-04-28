@@ -6,10 +6,12 @@ import LinearGradientText from "@/components/LinearGradientText";
 
 type SubscriptionButtonProps = {
   className?: string;
+  badgeCount: number;
 };
 
 const SubscriptionButton: React.FC<SubscriptionButtonProps> = ({
   className,
+  badgeCount,
 }) => {
   return (
     <Link asChild href={{ pathname: "/subscription" }}>
@@ -18,9 +20,13 @@ const SubscriptionButton: React.FC<SubscriptionButtonProps> = ({
       >
         <View className="relative">
           <Icon source={require("@/assets/icons/envelope.svg")} size={32} />
-          <View className="absolute top-[-4px] right-[-4px] bg-[#E82C13E5] rounded-full w-4 h-4 items-center justify-center">
-            <Text className="text-white text-[10px] font-bold">3</Text>
-          </View>
+          {badgeCount > 0 && (
+            <View className="absolute top-[-4px] right-[-4px] bg-[#E82C13E5] rounded-full w-4 h-4 items-center justify-center">
+              <Text className="text-white text-[10px] font-bold">
+                {badgeCount}
+              </Text>
+            </View>
+          )}
         </View>
         <View className="flex-1 ml-3">
           <LinearGradientText
