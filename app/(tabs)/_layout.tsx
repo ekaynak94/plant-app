@@ -60,7 +60,7 @@ export default function TabLayout() {
           title: "My Garden",
           tabBarIcon: ({ color }) => (
             <Icon
-              source={require("@/assets/icons/myGarden.svg")}
+              source={require("@/assets/icons/my-garden.svg")}
               size={25}
               color={color}
             />
