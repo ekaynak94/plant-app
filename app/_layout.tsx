@@ -1,10 +1,14 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { useFonts } from "expo-font";
+import React from "react";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import store, { persistor } from "@/store";
 import { router, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { Provider, useSelector } from "react-redux";
-import store, { RootState } from "@/store";
+import { useFonts } from "expo-font";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 import "react-native-reanimated";
 import "../global.css";
 
@@ -20,7 +24,9 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   return (
     <Provider store={store}>
-      <RootLayoutNav />
+      <PersistGate loading={null} persistor={persistor}>
+        <RootLayoutNav />
+      </PersistGate>
     </Provider>
   );
 }
