@@ -4,6 +4,8 @@ import { useRouter } from "expo-router";
 import PagerView from "react-native-pager-view";
 import { LinearGradient } from "expo-linear-gradient";
 import UnderlinedText from "@/components/UnderlinedText";
+import { useDispatch } from "react-redux";
+import { completeOnboarding } from "@/store/onboardingSlice";
 
 const steps = [
   {
@@ -44,6 +46,7 @@ const steps = [
 export default function Onboarding() {
   const router = useRouter();
   const pagerRef = useRef<PagerView>(null);
+  const dispatch = useDispatch();
   const [currentStep, setCurrentStep] = useState(0);
 
   const handleNext = () => {
@@ -51,6 +54,7 @@ export default function Onboarding() {
       pagerRef.current?.setPage(currentStep + 1);
       setCurrentStep(currentStep + 1);
     } else {
+      dispatch(completeOnboarding());
       router.replace("/(tabs)");
     }
   };
