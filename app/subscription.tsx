@@ -5,7 +5,19 @@ import { Image } from "expo-image";
 import { BlurView } from "expo-blur";
 import { useRouter } from "expo-router";
 
-const features = [
+type Feature = {
+  icon: any;
+  title: string;
+  subtitle: string;
+};
+
+type Plan = {
+  title: string;
+  subtitle: string;
+  discount?: string;
+};
+
+const features: Feature[] = [
   {
     icon: require("@/assets/icons/scan.svg"),
     title: "Unlimited",
@@ -23,7 +35,7 @@ const features = [
   },
 ];
 
-const plans = [
+const plans: Plan[] = [
   {
     title: "1 Month",
     subtitle: "$2.99/month, auto renewable",
@@ -34,6 +46,30 @@ const plans = [
     discount: "Save 50%",
   },
 ];
+
+const FeatureItem: React.FC<{ feature: Feature }> = ({ feature }) => (
+  <View className="w-[156px] h-[130px] rounded-2xl mr-4 p-4 overflow-hidden relative">
+    <BlurView intensity={20} tint="light" className="absolute inset-0" />
+    <View className="w-12 h-12 bg-black/25 rounded-2xl items-center justify-center mb-4">
+      <Icon source={feature.icon} size={24} color="white" />
+    </View>
+    <Text className="text-white font-bold text-sm">{feature.title}</Text>
+    <Text className="text-[#FFFFFFB2] text-xs mt-1">{feature.subtitle}</Text>
+  </View>
+);
+
+const PlanItem: React.FC<{ plan: Plan }> = ({ plan }) => (
+  <View className="flex-row items-center p-4 rounded-2xl border-[0.5px] border-[#FFFFFF4D] overflow-hidden relative">
+    <BlurView intensity={20} tint="light" className="absolute inset-0" />
+    <Pressable className="flex-row items-center">
+      <View className="w-5 h-5 rounded-full border-2 border-white mr-4" />
+      <View>
+        <Text className="text-white font-bold">{plan.title}</Text>
+        <Text className="text-[#FFFFFFB2] text-xs">{plan.subtitle}</Text>
+      </View>
+    </Pressable>
+  </View>
+);
 
 export default function SubscriptionModal() {
   const router = useRouter();
@@ -71,49 +107,12 @@ export default function SubscriptionModal() {
           className="ml-4 my-4"
         >
           {features.map((feature, index) => (
-            <View
-              key={index}
-              className="w-[156px] h-[130px] rounded-2xl mr-4 p-4 overflow-hidden relative"
-            >
-              <BlurView
-                intensity={20}
-                tint="light"
-                className="absolute inset-0"
-              />
-              <View className="w-12 h-12 bg-black/25 rounded-2xl items-center justify-center mb-4">
-                <Icon source={feature.icon} size={24} color="white" />
-              </View>
-              <Text className="text-white font-bold text-sm">
-                {feature.title}
-              </Text>
-              <Text className="text-[#FFFFFFB2] text-xs mt-1">
-                {feature.subtitle}
-              </Text>
-            </View>
+            <FeatureItem key={index} feature={feature} />
           ))}
         </ScrollView>
-
         <View className="mx-4 mb-4 gap-4">
           {plans.map((plan, index) => (
-            <View
-              key={index}
-              className="flex-row items-center p-4 rounded-2xl border-[0.5px] border-[#FFFFFF4D] overflow-hidden relative"
-            >
-              <BlurView
-                intensity={20}
-                tint="light"
-                className="absolute inset-0"
-              />
-              <Pressable className="flex-row items-center">
-                <View className="w-5 h-5 rounded-full border-2 border-white mr-4" />
-                <View>
-                  <Text className="text-white font-bold">{plan.title}</Text>
-                  <Text className="text-[#FFFFFFB2] text-xs">
-                    {plan.subtitle}
-                  </Text>
-                </View>
-              </Pressable>
-            </View>
+            <PlanItem key={index} plan={plan} />
           ))}
         </View>
         <Pressable className="mx-4 bg-[#28AF6E] rounded-2xl py-4 items-center">
