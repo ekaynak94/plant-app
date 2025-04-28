@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, Pressable, ScrollView } from "react-native";
+import { View, Text, Pressable, ScrollView, StyleSheet } from "react-native";
 import Icon from "@/components/Icon";
 import { Image } from "expo-image";
 import { BlurView } from "expo-blur";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 
 type Feature = {
@@ -65,14 +66,40 @@ const PlanItem: React.FC<{
 }> = ({ plan, isSelected, onSelect }) => (
   <Pressable
     onPress={onSelect}
-    className="flex-row items-center p-4 rounded-2xl overflow-hidden relative"
+    className={`flex-row items-center p-4 rounded-2xl overflow-hidden relative ${
+      plan.discount
+        ? "border-2 border-[#28AF6E]"
+        : "border-[0.5px] border-[#FFFFFF4D]"
+    }`}
   >
-    <BlurView intensity={20} tint="light" className="absolute inset-0" />
+    {plan.discount ? (
+      <LinearGradient
+        colors={["#28AF6E3D", "#28AF6E00"]}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={{
+          ...StyleSheet.absoluteFillObject,
+        }}
+      />
+    ) : (
+      <BlurView
+        intensity={20}
+        tint="light"
+        style={{
+          ...StyleSheet.absoluteFillObject,
+        }}
+      />
+    )}
+    {plan.discount && (
+      <View className="absolute top-0 right-0 bg-[#28AF6E] p-2 rounded-bl-2xl">
+        <Text className="text-white text-xs font-bold">{plan.discount}</Text>
+      </View>
+    )}
     <View
       className={`w-6 h-6 rounded-full mr-4 items-center justify-center ${
         isSelected ? "bg-white border-8 border-[#28AF6E]" : "bg-[#FFFFFF4D]"
       }`}
-    ></View>
+    />
     <View>
       <Text className="text-white font-bold">{plan.title}</Text>
       <Text className="text-[#FFFFFFB2] text-xs">{plan.subtitle}</Text>
